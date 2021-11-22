@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    command: python src/manage.py runserver 0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/web
+          
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=sharecipe
+      - POSTGRES_PASSWORD=sharecipe
