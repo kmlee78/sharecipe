@@ -1,18 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
-from .constants import (
-    INGREDIENTS,
-    THEMES,
-    METHODS,
-)
-
-
-class SharecipeUser(User):
-    address = models.CharField(max_length=40)
-
-    def __str__(self):
-        return self.username
+from user.models import SharecipeUser
 
 
 class Ingredient(models.Model):
@@ -30,7 +17,7 @@ class Theme(models.Model):
 class Recipe(models.Model):
     title = models.CharField(max_length=20, blank=True, default="")
     content = models.TextField()
-    author = models.ForeignKey("SharecipeUser", on_delete=models.CASCADE)
+    author = models.ForeignKey(SharecipeUser, on_delete=models.CASCADE)
     ingredients = models.ManyToManyField(Ingredient, through="RecipeXIngredient")
     methods = models.ManyToManyField(Method, through="RecipeXMethod")
     themes = models.ManyToManyField(Theme, through="RecipeXTheme")
@@ -44,8 +31,8 @@ class Recipe(models.Model):
 class Review(models.Model):
     title = models.CharField(max_length=20)
     content = models.TextField()
-    author = models.ForeignKey("SharecipeUser", on_delete=models.CASCADE)
-    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE)
+    author = models.ForeignKey(SharecipeUser, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     dt_created = models.DateTimeField(auto_now_add=True)
     dt_updated = models.DateTimeField(auto_now=True)
 
@@ -60,9 +47,9 @@ class RecipeXIngredient(models.Model):
 
 class RecipeXMethod(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Method, on_delete=models.CASCADE)
+    method = models.ForeignKey(Method, on_delete=models.CASCADE)
 
 
 class RecipeXTheme(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Theme, on_delete=models.CASCADE)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
