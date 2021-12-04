@@ -1,0 +1,19 @@
+Sharecipe
+
+<br>
+{% if user.is_authenticated %}
+    {{ user.username }}, Welcome!
+    <br>
+    <a href="/recipe/create_recipe">Create recipe</a>
+    <br>
+    <a href="/recipe/check_recipe">Check recipe</a>
+    <br>
+    <a href="/auth/logout">Logout</a>
+{% else %}
+
+<a href="/auth/login">Login</a>
+<br>
+<a href="/recipe/check_recipe">Check recipe</a>
+
+
+{% endif %}

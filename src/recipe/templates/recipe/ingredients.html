@@ -1,0 +1,13 @@
+Ingredients
+<br>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>Name</p>
+    <input name="name" type="text">
+    <p>Quantity</p>
+    <input name="quantity" type="text">
+    <input type="submit" value="Submit">
+    <a href="{% url 'recipe:create_methods' %}">Next</a>
+
+</form>

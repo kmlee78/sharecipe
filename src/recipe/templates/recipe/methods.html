@@ -1,0 +1,13 @@
+Methods
+<br>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>Name</p>
+    <input name="name" type="text">
+    <p>Time</p>
+    <input name="time" type="number">
+    <input type="submit" value="Submit">
+    <a href="{% url 'recipe:create_theme' %}">Next</a>
+
+</form>

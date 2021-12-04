@@ -5,6 +5,9 @@ from . models import User
 
 # Create your views here.
 
+def default(request):
+    return render(request, "users/default.html")
+
 def login_view(request):
     if request.method == "POST":
         username = request.POST["username"]

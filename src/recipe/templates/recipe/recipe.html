@@ -1,0 +1,15 @@
+{% if request.user.is_authenticated %}
+    Recipe
+    <br>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <p>Name</p>
+        <input name="name" type="text">
+        <input type="submit" value="Submit">
+
+    </form>
+{% else %}
+    User is not logged in!
+    <a href="{% url 'user:login' %}">Login</a>
+{% endif %}

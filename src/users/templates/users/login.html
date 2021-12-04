@@ -3,9 +3,12 @@ Login
 <br>
 {% if user.is_authenticated %}
     {{ user.username }}, Welcome!
+    <br>
+    <a href="{% url 'recipe:create_recipe' %}">Create recipe</a>
+    <br>
     <a href="{% url 'user:logout' %}">Logout</a>
 {% else %}
-
+If you don't have an account please sign up.
 <form action="" method="POST">
     {% csrf_token %}
     <input name="username" type="text">
