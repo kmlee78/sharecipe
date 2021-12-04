@@ -51,7 +51,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "sharecipe.urls"
+ROOT_URLCONF = "project_cfg.urls"
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "sharecipe.wsgi.application"
+WSGI_APPLICATION = "project_cfg.wsgi.application"
 
 
 # Database
