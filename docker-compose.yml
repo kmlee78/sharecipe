@@ -12,8 +12,13 @@ services:
           
   db:
     image: postgres
+    volumes:
+      - db-volume:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5124:5432
     environment:
       - POSTGRES_USER=sharecipe
       - POSTGRES_PASSWORD=sharecipe
+
+volumes:
+  db-volume:
