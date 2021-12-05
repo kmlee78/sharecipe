@@ -2,7 +2,14 @@ from recipe.models import Recipe, Review, Ingredient, Method, Theme
 from user.models import SharecipeUser
 
 
-def insert_data():
+def refresh_data():
+    SharecipeUser.objects.all().delete()
+    Ingredient.objects.all().delete()
+    Method.objects.all().delete()
+    Theme.objects.all().delete()
+    Recipe.objects.all().delete()
+    Review.objects.all().delete()
+
     SharecipeUser.objects.create_user(
         username="junhcha",
         email="junhcha@example.com",
@@ -81,7 +88,7 @@ def insert_data():
         ]
     )
 
-    author = SharecipeUser.objects.get(user_ptr_id=2)
+    author = SharecipeUser.objects.get(username="kmlee78")
     recipe = Recipe.objects.create(
         title="Cup Ramen",
         content="1. Boil water.\n 2. Pour water into Cup Ramen.\n 3. wait 4 minutes. \n 4. Eat.",
@@ -94,8 +101,8 @@ def insert_data():
     recipe.methods.set(methods)
     recipe.themes.set(themes)
 
-    author = SharecipeUser.objects.get(user_ptr_id=3)
-    recipe = Recipe.objects.get(id=1)
+    author = SharecipeUser.objects.get(username="drg1021")
+    recipe = Recipe.objects.get(title="Cup Ramen")
     review = Review.objects.create(
         title="Good!", content="I love Ramen.", author=author, recipe=recipe
     )
