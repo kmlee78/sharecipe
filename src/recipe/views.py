@@ -1,6 +1,6 @@
 import datetime
 
-from project_cfg.permissions import IsAdminOrReadOnly, IsOwnerOrAdmin
+from project_cfg.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -54,7 +54,7 @@ class RecipeList(APIView):
 
 
 class RecipeDetail(APIView):
-    permission_classes = [IsOwnerOrAdmin]
+    permission_classes = [IsOwnerOrReadOnly]
 
     def _get_object(self, recipe_id):
         try:
@@ -135,7 +135,7 @@ class ReviewList(APIView):
 
 
 class ReviewDetail(APIView):
-    permission_classes = [IsOwnerOrAdmin]
+    permission_classes = [IsOwnerOrReadOnly]
 
     def _get_object(self, review_id):
         try:
