@@ -1,7 +1,27 @@
-from recipe.models import Ingredient, Method, Theme
+from recipe.models import Recipe, Review, Ingredient, Method, Theme
+from user.models import SharecipeUser
 
 
-def process():
+def insert_data():
+    SharecipeUser.objects.create_user(
+        username="junhcha",
+        email="junhcha@example.com",
+        address="dormitory",
+        password="123123",
+        is_staff=True,
+    )
+    SharecipeUser.objects.create_user(
+        username="kmlee78",
+        email="kmlee78@example.com",
+        address="dormitory",
+        password="123123",
+    )
+    SharecipeUser.objects.create_user(
+        username="drg1021",
+        email="drg1021@example.com",
+        address="house",
+        password="123123",
+    )
     Ingredient.objects.bulk_create(
         [
             Ingredient(name="carrot"),
@@ -60,3 +80,23 @@ def process():
             Theme(name="diet"),
         ]
     )
+    """
+    Recipe.objects.bulk_create(
+        [
+            Recipe(
+                title="Cup Ramen",
+                content="1. Boil water.\n 2. Pour water into Cup Ramen.\n 3. wait 4 minutes. \n 4. Eat.",
+                ingredients=["water"],
+                methods=["boil"],
+                themes=["party"],
+            ),
+            Recipe(
+                title="Sandwich",
+                content="1. Buy Sandwich.\n",
+                ingredients=["bread", "cabbage"],
+                methods=["bake", "dry"],
+                themes=["diet"],
+            ),
+        ]
+    )
+    """
