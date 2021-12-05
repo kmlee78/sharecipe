@@ -80,23 +80,22 @@ def insert_data():
             Theme(name="diet"),
         ]
     )
-    """
-    Recipe.objects.bulk_create(
-        [
-            Recipe(
-                title="Cup Ramen",
-                content="1. Boil water.\n 2. Pour water into Cup Ramen.\n 3. wait 4 minutes. \n 4. Eat.",
-                ingredients=["water"],
-                methods=["boil"],
-                themes=["party"],
-            ),
-            Recipe(
-                title="Sandwich",
-                content="1. Buy Sandwich.\n",
-                ingredients=["bread", "cabbage"],
-                methods=["bake", "dry"],
-                themes=["diet"],
-            ),
-        ]
+
+    author = SharecipeUser.objects.get(user_ptr_id=2)
+    recipe = Recipe.objects.create(
+        title="Cup Ramen",
+        content="1. Boil water.\n 2. Pour water into Cup Ramen.\n 3. wait 4 minutes. \n 4. Eat.",
+        author=author,
     )
-    """
+    ingredients = Ingredient.objects.filter(name__in=["water"])
+    methods = Method.objects.filter(name__in=["boil"])
+    themes = Theme.objects.filter(name__in=["party"])
+    recipe.ingredients.set(ingredients)
+    recipe.methods.set(methods)
+    recipe.themes.set(themes)
+
+    author = SharecipeUser.objects.get(user_ptr_id=3)
+    recipe = Recipe.objects.get(id=1)
+    review = Review.objects.create(
+        title="Good!", content="I love Ramen.", author=author, recipe=recipe
+    )
