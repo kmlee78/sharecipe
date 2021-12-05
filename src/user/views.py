@@ -35,5 +35,5 @@ class UserDetailView(APIView):
 
     def get(self, request, pk, format=None):
         user = self.get_object(pk)
-        serializer = SharecipeUser(user)
+        serializer = UserSerializer(user)
         return Response(serializer.data)

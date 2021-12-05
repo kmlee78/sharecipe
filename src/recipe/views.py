@@ -1,6 +1,7 @@
 import datetime
 
-from project_cfg.permissions import IsAdminOrReadOnly
+from project_cfg.permissions import IsAdminOrReadOnly, IsOwnerOrAdmin
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import NotFound
@@ -26,6 +27,8 @@ from django.db import transaction
 
 
 class RecipeList(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request, format=None):
         recipes = Recipe.objects.all()
         serializer = RecipeSerializer(recipes, many=True)
@@ -51,6 +54,8 @@ class RecipeList(APIView):
 
 
 class RecipeDetail(APIView):
+    permission_classes = [IsOwnerOrAdmin]
+
     def _get_object(self, recipe_id):
         try:
             return Recipe.objects.get(pk=recipe_id)
@@ -85,7 +90,7 @@ class RecipeDetail(APIView):
             )
             RecipeXTheme.objects.filter(recipe=recipe).delete()
             RecipeXTheme.objects.bulk_create(
-                [RecipeXTheme(recipe=recipe, Theme=theme) for theme in themes]
+                [RecipeXTheme(recipe=recipe, theme=theme) for theme in themes]
             )
 
         serializer = RecipeSerializer(recipe)
@@ -105,6 +110,8 @@ class ReviewAll(APIView):
 
 
 class ReviewList(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request, recipe_id, format=None):
         reviews = Review.objects.filter(recipe__id=recipe_id).all()
         serializer = ReviewSerializer(reviews, many=True)
@@ -128,6 +135,8 @@ class ReviewList(APIView):
 
 
 class ReviewDetail(APIView):
+    permission_classes = [IsOwnerOrAdmin]
+
     def _get_object(self, review_id):
         try:
             return Review.objects.get(pk=review_id)
