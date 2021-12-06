@@ -45,5 +45,5 @@ Each recipe can be evaluated by users so that the other users can reference thos
    - URL: **localhost:8000/users/signup**
 
 # ER Modeling information
-![image](https://user-images.githubusercontent.com/41867381/144742308-18b1d702-03f8-4302-b52b-c74ecec2cc0f.png)
+![KakaoTalk_Image_2021-12-05-19-20-08](https://user-images.githubusercontent.com/41867381/144742587-e7db36a0-9514-42ac-a3fc-3b06d07559b3.jpeg)
 
