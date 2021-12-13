@@ -15,10 +15,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
+
+def get_documented_apis(endpoints, **kwargs):
+    return [
+        (path, path_regex, method, callback)
+        for path, path_regex, method, callback in endpoints
+        if (path.startswith("/users"))
+        or (path.startswith("/recipes"))
+        or (path.startswith("/reviews"))
+        or (path.startswith("/ingredients"))
+        or (path.startswith("/methods"))
+        or (path.startswith("/themes"))
+    ]
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
     path("", include("recipe.urls")),
     path("", include("user.urls")),
+    path("docs/download", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "docs/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
 ]
