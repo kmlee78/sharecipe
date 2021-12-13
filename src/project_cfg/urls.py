@@ -28,6 +28,7 @@ def get_documented_apis(endpoints, **kwargs):
         or (path.startswith("/ingredients"))
         or (path.startswith("/methods"))
         or (path.startswith("/themes"))
+        or (path.startswith("/create-base-objects"))
     ]
 
 
