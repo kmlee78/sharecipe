@@ -28,22 +28,12 @@ Each recipe can be evaluated by users so that the other users can reference thos
    ```shell
    make dev-up
    ```
-3. Run container bash shell.
-   ```shell
-   make dev-shell
-   ```
-4. Create base objects for testing.(inside the shell)
-   ```shell
-   python src/manage.py shell
-   ```
-   ```python
-   from dummy_data import refresh_data()
-   refresh_data()
-   ```
-5. Open signup page with browser.
+3. Open signup page with browser.
 
-   - URL: **localhost:8000/users/signup**
+   - URL: **localhost:8000/docs**
+
+4. Create base objects by requesting via endpoint named "/create-base-objects".
 
 # ER Modeling information
-![KakaoTalk_Image_2021-12-05-19-20-08](https://user-images.githubusercontent.com/41867381/144742587-e7db36a0-9514-42ac-a3fc-3b06d07559b3.jpeg)
 
+![KakaoTalk_Image_2021-12-05-19-20-08](https://user-images.githubusercontent.com/41867381/144742587-e7db36a0-9514-42ac-a3fc-3b06d07559b3.jpeg)

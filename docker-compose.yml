@@ -9,6 +9,8 @@ services:
       - 8000:8000
     volumes:
       - .:/web
+      - packages:/usr/local/lib/python3.10/site-packages
+      - bin:/usr/local/bin
           
   db:
     image: postgres
@@ -22,3 +24,5 @@ services:
 
 volumes:
   db-volume:
+  packages:
+  bin:

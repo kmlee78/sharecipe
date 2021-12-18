@@ -1,10 +1,12 @@
 import datetime
+from re import A
 
 from project_cfg.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import NotFound
+from drf_spectacular.utils import extend_schema
 from recipe.models import (
     Ingredient,
     Method,
@@ -22,18 +24,22 @@ from recipe.serializers import (
     ReviewSerializer,
     ThemeSerializer,
 )
+from recipe import oas
 from user.models import SharecipeUser
 from django.db import transaction
 
 
+@extend_schema(tags=["recipe"])
 class RecipeList(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    @extend_schema(**oas.GET_RECIPES)
     def get(self, request, format=None):
         recipes = Recipe.objects.all()
         serializer = RecipeSerializer(recipes, many=True)
         return Response(serializer.data)
 
+    @extend_schema(**oas.POST_RECIPE)
     def post(self, request, format=None):
         user = request.user
         author = SharecipeUser.objects.get(user_ptr_id=user.id)
@@ -53,6 +59,7 @@ class RecipeList(APIView):
         return Response(serializer.data, status=201)
 
 
+@extend_schema(tags=["recipe"])
 class RecipeDetail(APIView):
     permission_classes = [IsOwnerOrReadOnly]
 
@@ -62,11 +69,13 @@ class RecipeDetail(APIView):
         except Recipe.DoesNotExist:
             raise NotFound
 
+    @extend_schema(**oas.GET_RECIPE_DETAIL)
     def get(self, request, recipe_id, format=None):
         recipe = self._get_object(recipe_id)
         serializer = RecipeSerializer(recipe)
         return Response(serializer.data)
 
+    @extend_schema(**oas.PUT_RECIPE_CONTENT)
     def put(self, request, recipe_id, format=None):
         recipe = Recipe.objects.get(id=recipe_id)
         ingredients = Ingredient.objects.filter(name__in=request.data["ingredients"])
@@ -96,12 +105,14 @@ class RecipeDetail(APIView):
         serializer = RecipeSerializer(recipe)
         return Response(serializer.data, status=200)
 
+    @extend_schema(**oas.DELETE_RECIPE)
     def delete(self, request, recipe_id, format=None):
         recipe = self._get_object(recipe_id)
         recipe.delete()
         return Response(status=204)
 
 
+@extend_schema(tags=["recipe"])
 class ReviewAll(APIView):
     def get(self, request, format=None):
         reviews = Review.objects.filter().all()
@@ -109,14 +120,17 @@ class ReviewAll(APIView):
         return Response(serializer.data)
 
 
+@extend_schema(tags=["recipe"])
 class ReviewList(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    @extend_schema(**oas.GET_REVIEWS)
     def get(self, request, recipe_id, format=None):
         reviews = Review.objects.filter(recipe__id=recipe_id).all()
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
 
+    @extend_schema(**oas.POST_REVIEW)
     def post(self, request, recipe_id, format=None):
         user = request.user
         author = SharecipeUser.objects.get(user_ptr_id=user.id)
@@ -134,6 +148,7 @@ class ReviewList(APIView):
         return Response(serializer.data, status=201)
 
 
+@extend_schema(tags=["recipe"])
 class ReviewDetail(APIView):
     permission_classes = [IsOwnerOrReadOnly]
 
@@ -143,11 +158,13 @@ class ReviewDetail(APIView):
         except Review.DoesNotExist:
             raise NotFound
 
+    @extend_schema(**oas.GET_REVIEW_DETAIL)
     def get(self, request, review_id, format=None):
         review = self._get_object(review_id)
         serializer = ReviewSerializer(review)
         return Response(serializer.data)
 
+    @extend_schema(**oas.PUT_REVIEW_DETAIL)
     def put(self, request, review_id, format=None):
         review = self._get_object(review_id)
         review.title = request.data["title"]
@@ -156,48 +173,58 @@ class ReviewDetail(APIView):
         serializer = ReviewSerializer(review)
         return Response(serializer.data)
 
+    @extend_schema(**oas.DELETE_REVIEW)
     def delete(self, request, review_id, format=None):
         review = self._get_object(review_id)
         review.delete()
         return Response(status=204)
 
 
+@extend_schema(tags=["recipe"])
 class IngredientList(APIView):
     permission_classes = [IsAdminOrReadOnly]
 
+    @extend_schema(**oas.GET_INGREDIENTS)
     def get(self, request, format=None):
         ingredients = Ingredient.objects.all()
         serializer = IngredientSerializer(ingredients, many=True)
         return Response(serializer.data)
 
+    @extend_schema(**oas.POST_INGREDIENTS)
     def post(self, request, format=None):
         ingredient = Ingredient.objects.create(name=request.data["name"])
         serializer = IngredientSerializer(ingredient)
         return Response(serializer.data, status=201)
 
 
+@extend_schema(tags=["recipe"])
 class MethodList(APIView):
     permission_classes = [IsAdminOrReadOnly]
 
+    @extend_schema(**oas.GET_METHODS)
     def get(self, request, format=None):
         methods = Method.objects.all()
         serializer = MethodSerializer(methods, many=True)
         return Response(serializer.data)
 
+    @extend_schema(**oas.POST_METHODS)
     def post(self, request, format=None):
         method = Method.objects.create(name=request.data["name"])
         serializer = MethodSerializer(method)
         return Response(serializer.data, status=201)
 
 
+@extend_schema(tags=["recipe"])
 class ThemeList(APIView):
     permission_classes = [IsAdminOrReadOnly]
 
+    @extend_schema(**oas.GET_THEMES)
     def get(self, request, format=None):
         themes = Theme.objects.all()
         serializer = ThemeSerializer(themes, many=True)
         return Response(serializer.data)
 
+    @extend_schema(**oas.POST_THEMES)
     def post(self, request, format=None):
         theme = Theme.objects.create(name=request.data["name"])
         serializer = ThemeSerializer(theme)

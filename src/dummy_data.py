@@ -103,6 +103,6 @@ def refresh_data():
 
     author = SharecipeUser.objects.get(username="drg1021")
     recipe = Recipe.objects.get(title="Cup Ramen")
-    review = Review.objects.create(
+    Review.objects.create(
         title="Good!", content="I love Ramen.", author=author, recipe=recipe
     )
