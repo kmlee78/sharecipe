@@ -25,7 +25,7 @@ def get_documented_apis(endpoints, **kwargs):
         if (path.startswith("/users"))
         or (path.startswith("/recipes"))
         or (path.startswith("/reviews"))
-        or (path.startswith("/ingredients"))
+        or (path.startswith("/ingredient"))
         or (path.startswith("/methods"))
         or (path.startswith("/themes"))
         or (path.startswith("/create-base-objects"))

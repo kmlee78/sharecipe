@@ -138,6 +138,8 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+APPEND_SLASH = False
+
 SPECTACULAR_SETTINGS = {
     "TITLE": "Sharecipe Backend API Documentation",
     "DESCRIPTION": "API document of Sharecipe.",
