@@ -9,7 +9,6 @@ python = "^3.10"
 Django = "3"
 djangorestframework = "^3.12.4"
 drf-spectacular = "^0.21.0"
-psycopg = "^3.0.5"
 psycopg2-binary = "^2.9.2"
 
 [tool.poetry.dev-dependencies]
