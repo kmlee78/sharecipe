@@ -15,6 +15,7 @@ class UserListView(APIView):
     def get(self, request, format=None):
         users = SharecipeUser.objects.all()
         serializer = UserSerializer(users, many=True)
+        print(users.query)
         return Response(serializer.data)
 
 

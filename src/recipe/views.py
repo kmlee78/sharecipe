@@ -1,5 +1,4 @@
 import datetime
-from re import A
 
 from project_cfg.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -37,6 +36,7 @@ class RecipeList(APIView):
     def get(self, request, format=None):
         recipes = Recipe.objects.all()
         serializer = RecipeSerializer(recipes, many=True)
+        print(recipes.query)
         return Response(serializer.data)
 
     @extend_schema(**oas.POST_RECIPE)
@@ -116,6 +116,7 @@ class RecipeDetail(APIView):
 class ReviewAll(APIView):
     def get(self, request, format=None):
         reviews = Review.objects.filter().all()
+        print(reviews.query)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
 
@@ -128,6 +129,7 @@ class ReviewList(APIView):
     def get(self, request, recipe_id, format=None):
         reviews = Review.objects.filter(recipe__id=recipe_id).all()
         serializer = ReviewSerializer(reviews, many=True)
+        print(reviews.query)
         return Response(serializer.data)
 
     @extend_schema(**oas.POST_REVIEW)
@@ -188,6 +190,7 @@ class IngredientList(APIView):
     def get(self, request, format=None):
         ingredients = Ingredient.objects.all()
         serializer = IngredientSerializer(ingredients, many=True)
+        print(ingredients.query)
         return Response(serializer.data)
 
     @extend_schema(**oas.POST_INGREDIENTS)
@@ -205,6 +208,7 @@ class MethodList(APIView):
     def get(self, request, format=None):
         methods = Method.objects.all()
         serializer = MethodSerializer(methods, many=True)
+        print(methods.query)
         return Response(serializer.data)
 
     @extend_schema(**oas.POST_METHODS)
@@ -222,6 +226,7 @@ class ThemeList(APIView):
     def get(self, request, format=None):
         themes = Theme.objects.all()
         serializer = ThemeSerializer(themes, many=True)
+        print(themes.query)
         return Response(serializer.data)
 
     @extend_schema(**oas.POST_THEMES)
