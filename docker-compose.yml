@@ -13,7 +13,7 @@ services:
       - bin:/usr/local/bin
           
   db:
-    image: postgres
+    image: postgres:10-alpine
     volumes:
       - db-volume:/var/lib/postgresql/data
     ports:
